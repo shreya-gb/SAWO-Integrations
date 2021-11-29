@@ -1,22 +1,13 @@
-import React, { useEffect } from "react";
-import SawoLogin from "sawo-react";
+import styles from '../styles/Home.module.css'
+import Link from 'next/link'
 
-const Greetings = () => {
-  function sawoLoginCallback(payload) {
-    console.log(payload);
-  }
-
-  const sawoConfig = {
-    onSuccess: sawoLoginCallback, //required,
-    identifierType: "email", //required, must be one of: 'email', 'phone_number_sms',
-    apiKey: "069eebc0-8afa-4712-80b1-9102c04af67c", // required, get it from sawo dev.sawolabs.com,
-    containerHeight: "300px", // the login container height, default is 300px
-  };
-
+export default function Home() {
   return (
-    <div>
-      <SawoLogin config={sawoConfig} />
+    <div className= "container">
+      <h1 align= "center" width= {50} height= {50}> Hey EVERYONE! </h1>
+      <Link href="/greetings">
+          <button className= {styles.center}> Proceed!</button>
+      </Link>
     </div>
-  );
-};
-export default Greetings;
+ )
+}
