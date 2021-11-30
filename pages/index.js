@@ -1,22 +1,31 @@
-import SawoLogin from 'sawo-react';
+import Sawo from 'sawo'
+import { useState, useEffect } from 'react';
 
-const Greetings = () => {
-    function sawoLoginCallback(payload) {
-        console.log(payload);
-    }
-    
-const sawoConfig = {
-    onSuccess: sawoLoginCallback, //required,
-    identifierType: 'email', //required, must be one of: 'email', 'phone_number_sms',
-    apiKey: 'API-KEY', // required, get it from sawo dev.sawolabs.com,
-    containerHeight: '750px', // the login container height, default is 300px
-  }
+const Index = () => {
+  const [isUserLoggedIn, setUserLoggedIn] = useState(false);
+  const [payload, setPayload] = useState({});
 
-  return (
-    <div>
-        <SawoLogin config={sawoConfig}/>
-    </div>
-  );
-};
+  useEffect(() => {
+    var config = {
+      containerID: "sawo-container",
+      identifierType: "email", // can be one of 'email' or 'phone_number_sms'
+      apiKey: 'API KEY', // Add the API key copied from 2nd step
+      onSuccess: (payload) => { // Add a callback here to handle the payload sent by sdk
+        console.log("Payload : " + JSON.stringify(payload));
+        setUserLoggedIn(true);
+        setPayload(payload);
+      },
+    };
 
-export default Greetings;
+    let sawo = new Sawo(config);
+    sawo.showForm();
+  }, []);
+
+  return <div>
+
+    (!isUserLoggedIn? <div className="formContainer" id="sawo-container" />: <div>
+      Welcome
+      </div>)
+  </div>
+}
+export default Index
